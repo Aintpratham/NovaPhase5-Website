@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Setup — Nova Phase5</title>
-  <meta name="description" content="How to install and activate Nova Phase5 in four simple steps." />
+  <meta name="description" content="Installation guide for Nova Phase5." />
   <meta name="theme-color" content="#050505" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,15 +20,14 @@
   <nav class="site-nav">
     <div class="container">
       <a href="../index.html" class="nav-logo">Nova<span class="mark">Phase5</span></a>
+
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
+
       <ul class="nav-links" id="nav-links">
         <li><a href="../index.html">Home</a></li>
         <li><a href="proof.html">Proof</a></li>
-        <!-- TODO (Account Login): enable once customer accounts exist
-        <li><a href="login.html">Sign in</a></li>
-        -->
         <li><a href="pricing.html" class="nav-cta">Get Started</a></li>
       </ul>
     </div>
@@ -36,62 +35,65 @@
 
   <main>
 
-    <!-- ============ SETUP HERO ============ -->
+    <!-- ============ HERO ============ -->
     <header class="setup-hero">
       <div class="container">
         <span class="eyebrow">Setup</span>
-        <h1>Getting started</h1>
-        <p>Four simple steps from download to your first run.</p>
+        <h1>Installation guide</h1>
+        <p>Three simple steps from download to activation.</p>
       </div>
     </header>
 
     <section class="setup-body">
       <div class="container">
 
-        <!-- ====================================================
-             SETUP STEPS
-             Steps are a real sequence, so numbering is meaningful.
-             Buttons are placeholders until the backend is ready.
-             ==================================================== -->
         <ol class="steps">
 
-          <!-- STEP 1 — DOWNLOAD -->
+          <!-- STEP 1 -->
           <li class="step-card reveal">
             <span class="step-num">01</span>
+
             <div class="step-body">
               <h3>Download</h3>
-              <p>Get the latest version of Nova for your computer.</p>
-              <!-- TODO (License Downloads): link to the real download once hosted -->
-              <a href="#" class="btn btn-secondary is-disabled" aria-disabled="true" tabindex="-1">Download Nova</a>
+
+              <p>
+                Get the latest version of Nova for your computer.
+              </p>
+
+              <a
+                href="../Downloads/Nova%20Phase5.zip"
+                class="btn btn-primary"
+                download
+              >
+                Download Nova
+              </a>
             </div>
           </li>
 
-          <!-- STEP 2 — INSTALL -->
+          <!-- STEP 2 -->
           <li class="step-card reveal" data-delay="80">
             <span class="step-num">02</span>
+
             <div class="step-body">
-              <h3>Install</h3>
-              <p>Open the file you downloaded and follow the prompts to finish installing.</p>
+              <h3>Unzip</h3>
+
+              <p>
+                Extract the file you downloaded and follow the ReadMe file to
+                finish the setup.
+              </p>
             </div>
           </li>
 
-          <!-- STEP 3 — ACTIVATE LICENSE -->
+          <!-- STEP 3 -->
           <li class="step-card reveal" data-delay="160">
             <span class="step-num">03</span>
+
             <div class="step-body">
               <h3>Activate license</h3>
-              <p>Enter the license key from your order to unlock Nova.</p>
-              <!-- TODO (Customer Portal): link to license lookup / resend -->
-            </div>
-          </li>
 
-          <!-- STEP 4 — START USING NOVA -->
-          <li class="step-card reveal" data-delay="240">
-            <span class="step-num">04</span>
-            <div class="step-body">
-              <h3>Start using Nova</h3>
-              <p>You're set. Nova begins watching for new warehouse opportunities right away.</p>
-              <a href="pricing.html" class="btn btn-primary">Get Started</a>
+              <p>
+                Enter the license key from your order to unlock Nova.
+              </p>
             </div>
           </li>
 
@@ -105,14 +107,23 @@
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
     <div class="container">
+
       <div class="footer-top">
+
         <div class="footer-brand">
           <a href="../index.html" class="nav-logo">Nova<span class="mark">Phase5</span></a>
-          <p>Built for Amazon warehouse applicants. Stay ahead of new shifts on Windows and macOS.</p>
+
+          <p>
+            Built for Amazon warehouse applicants. Stay ahead of new shifts on
+            Windows and macOS.
+          </p>
         </div>
+
         <div class="footer-cols">
+
           <div class="footer-col">
             <h4>Product</h4>
+
             <ul>
               <li><a href="../index.html">Home</a></li>
               <li><a href="proof.html">Proof</a></li>
@@ -120,30 +131,38 @@
               <li><a href="setup.html">Setup</a></li>
             </ul>
           </div>
+
           <div class="footer-col">
             <h4>Company</h4>
+
             <ul>
               <li><a href="contact.html">Contact</a></li>
             </ul>
           </div>
+
           <div class="footer-col">
             <h4>Legal</h4>
+
             <ul>
               <li><a href="terms.html">Terms</a></li>
               <li><a href="privacy.html">Privacy</a></li>
             </ul>
           </div>
+
         </div>
       </div>
+
       <div class="footer-bottom">
         <span>&copy; <span data-year>2026</span> Awarenova. All rights reserved.</span>
         <span>A Pratham Shah production</span>
       </div>
+
     </div>
   </footer>
 
   <script src="../js/main.js"></script>
   <script src="../js/navigation.js"></script>
   <script src="../js/animations.js"></script>
+
 </body>
 </html>
