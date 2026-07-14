@@ -1,8 +1,9 @@
 /* ============================================================
-   REVIEWS & RESULTS PAGE STYLES (pages/proof.html)
-   Customer review carousel, review modal, verified results
-   grid with lightbox, disclaimer, and CTA. Mobile-first.
-   Review content lives in js/proof.js — edit it there.
+   SEE PROOF PAGE STYLES (pages/proof.html)
+   Customer review grid, review modal, optional in-card shift
+   proof images with lightbox, disclaimer, and CTA. Mobile-first:
+   one column on small phones, two when space permits, three on
+   desktop. Review content lives in js/proof.js — edit it there.
    ============================================================ */
 
 .proof-hero {
@@ -18,7 +19,7 @@
   font-size: 1.05rem;
 }
 
-/* Shared block rhythm (reviews / results) */
+/* Shared block rhythm */
 .proof-block {
   padding: clamp(44px, 8vw, 80px) 0;
   border-top: 1px solid var(--border-soft);
@@ -34,68 +35,23 @@
 }
 
 /* ============================================================
-   1. REVIEW CAROUSEL
-   A horizontally scrolling track. proof.js drifts it slowly,
-   pauses on hover/touch/focus, and it stays natively swipeable.
-   With reduced motion it is a plain swipeable row.
+   1. REVIEW GRID
+   All eight reviews visible at once — no carousel, no swiping.
    ============================================================ */
-.review-marquee {
-  position: relative;
-  overflow: hidden;
+.reviews-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
-/* Soft fade at both edges so cards drift in and out */
-.review-marquee::before,
-.review-marquee::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: clamp(24px, 6vw, 90px);
-  z-index: 2;
-  pointer-events: none;
-}
-.review-marquee::before {
-  left: 0;
-  background: linear-gradient(90deg, var(--bg-0), transparent);
-}
-.review-marquee::after {
-  right: 0;
-  background: linear-gradient(-90deg, var(--bg-0), transparent);
-}
-
-.review-track {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  padding: 6px 20px 18px;
-  scrollbar-width: none;            /* Firefox */
-  -webkit-overflow-scrolling: touch;
-}
-
-.review-track::-webkit-scrollbar { display: none; }
-
-.review-track:focus-visible {
-  outline: 2px solid var(--accent-light);
-  outline-offset: 3px;
-}
-
-/* ---------- Compact review card ---------- */
+/* ---------- Review card ---------- */
 .review-card {
-  flex: 0 0 auto;
-  width: min(300px, 76vw);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  text-align: left;
-  padding: 20px 20px 18px;
   background: var(--bg-2);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius);
-  color: var(--text-1);
-  font-family: var(--font-body);
-  cursor: pointer;
+  overflow: hidden;
   transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
@@ -104,9 +60,27 @@
   transform: translateY(-3px);
 }
 
-.review-card:focus-visible {
+/* The written review is one large tap target opening the modal */
+.review-open {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 1 auto;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 24px 22px 20px;
+  background: none;
+  border: 0;
+  color: var(--text-1);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.review-open:focus-visible {
   outline: 2px solid var(--accent-light);
-  outline-offset: 3px;
+  outline-offset: -3px;
+  border-radius: var(--radius);
 }
 
 .review-stars {
@@ -117,33 +91,33 @@
 
 .review-stars svg,
 .modal-stars svg {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
 }
 
 .review-title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.02rem;
+  font-size: 1.1rem;
   color: var(--text-0);
   letter-spacing: -0.01em;
   line-height: 1.25;
 }
 
-/* Two-line preview, clamped so cards stay compact */
+/* Readable preview, clamped so cards stay balanced */
 .review-preview {
-  font-size: 0.9rem;
-  line-height: 1.55;
+  font-size: 0.94rem;
+  line-height: 1.6;
   color: var(--text-2);
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
 .review-foot {
   margin-top: auto;
-  padding-top: 10px;
+  padding-top: 14px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -154,7 +128,7 @@
 
 .review-name {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.84rem;
   color: var(--text-1);
   letter-spacing: 0.02em;
 }
@@ -183,7 +157,59 @@
 }
 
 /* ============================================================
-   2. OVERLAYS — shared modal / lightbox foundation
+   2. OPTIONAL IN-CARD SHIFT PROOF
+   Rendered by proof.js ONLY when a review in the REVIEWS array
+   has a real image path. Nothing (no placeholder) shows before
+   that. The image is a framed, tappable preview that opens the
+   lightbox; the watermark is baked into the file itself.
+   ============================================================ */
+.review-proof {
+  position: relative;
+  display: block;
+  width: calc(100% - 32px);
+  margin: 0 16px 16px;
+  padding: 0;
+  background: var(--bg-1);
+  border: 1px solid var(--border-copper);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: zoom-in;
+  transition: border-color 0.3s var(--ease);
+}
+
+.review-proof:hover { border-color: var(--accent); }
+
+.review-proof:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 3px;
+}
+
+.review-proof img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.proof-label {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  background: rgba(5, 5, 5, 0.68);
+  border: 1px solid var(--border-soft);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* ============================================================
+   3. OVERLAYS — shared modal / lightbox foundation
    ============================================================ */
 body.modal-open { overflow: hidden; }
 
@@ -199,9 +225,9 @@ body.modal-open { overflow: hidden; }
 }
 
 /* The display:flex above outranks the browser's default
-   [hidden] { display:none }, which left both overlays visible
-   on page load. This keeps them hidden until proof.js removes
-   the hidden attribute. */
+   [hidden] { display:none }, which would leave both overlays
+   visible on page load. This keeps them hidden until proof.js
+   removes the hidden attribute. */
 .review-modal[hidden],
 .lightbox[hidden] {
   display: none !important;
@@ -300,97 +326,6 @@ body.modal-open { overflow: hidden; }
   color: var(--text-1);
 }
 
-/* ============================================================
-   3. VERIFIED RESULTS GRID
-   Placeholder cards until real watermarked images are added
-   (see comments in proof.html). Cards with an <img> become
-   tap-to-enlarge automatically via proof.js.
-   ============================================================ */
-.privacy-note {
-  margin-top: 10px;
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-}
-
-.results-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.result-card {
-  position: relative;
-  background: var(--bg-2);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
-}
-
-/* Only cards holding a real image behave as buttons */
-.result-card.has-image { cursor: zoom-in; }
-
-.result-card.has-image:hover {
-  border-color: var(--border-copper);
-  transform: translateY(-4px);
-}
-
-.result-card.has-image:focus-visible {
-  outline: 2px solid var(--accent-light);
-  outline-offset: 3px;
-}
-
-/* Real proof images: fill the card, watermark already baked in */
-.result-card img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  display: block;
-}
-
-/* Placeholder shown until an image is added */
-.result-placeholder {
-  aspect-ratio: 16 / 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 10px;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--radius-sm);
-  background:
-    radial-gradient(circle at 30% 30%, rgba(197, 139, 92, 0.07), transparent 55%),
-    var(--bg-1);
-}
-
-.ph-label {
-  font-family: var(--font-display);
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
-.ph-file {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-  opacity: 0.75;
-}
-
-.result-caption {
-  padding: 12px 16px;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border-soft);
-}
-
 /* ---------- Lightbox panel ---------- */
 .lightbox-panel {
   position: relative;
@@ -459,23 +394,19 @@ body.modal-open { overflow: hidden; }
    5. RESPONSIVE
    ============================================================ */
 @media (min-width: 640px) {
-  .results-grid { grid-template-columns: repeat(2, 1fr); }
-  .review-card { width: 320px; }
+  .reviews-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (min-width: 960px) {
-  .results-grid {
+  .reviews-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
-  .review-track { padding-left: 32px; padding-right: 32px; }
 }
 
 /* ============================================================
    6. REDUCED MOTION
    global.css already zeroes animations/transitions site-wide.
-   proof.js additionally skips auto-scroll entirely, so the
-   carousel becomes a plain swipeable row.
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .modal-panel,

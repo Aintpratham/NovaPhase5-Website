@@ -1,11 +1,12 @@
 /* ============================================================
-   PROOF.JS — Reviews & Results page only
-   1. REVIEWS data (edit reviews HERE, in one place)
-   2. Review carousel: slow auto-scroll, pauses on hover/touch,
-      manually swipeable, disabled for reduced motion
+   PROOF.JS — See Proof page only
+   1. REVIEWS data (edit reviews and proof images HERE, in one
+      place — including the optional "image" field per review)
+   2. Review grid: renders all reviews as static cards
    3. Review modal: open on card tap, close on Escape / button /
       backdrop, focus is managed for accessibility
-   4. Results lightbox: tap-to-enlarge for real proof images
+   4. Proof lightbox: tap-to-enlarge for real shift-proof images
+      shown inside review cards
    ============================================================ */
 
 (function () {
@@ -16,51 +17,76 @@
      To edit, add, or remove a review, change this array only.
      Every review renders with five stars and a Verified
      Customer label automatically.
+
+     OPTIONAL SHIFT-PROOF IMAGE PER REVIEW:
+     Set the "image" field to a real file path to show a framed
+     "Verified shift proof" preview beneath that review. While
+     image is "" (empty), NOTHING renders — no placeholder box.
+
+     HOW TO ADD YOUR IMAGES LATER:
+     1. Blur job IDs, names, and sensitive details, and add the
+        large diagonal "AWareNova.net" watermark BEFORE upload.
+     2. Place the files in assets/proof/ with these recommended
+        names (matching the three prepared reviews below):
+          assets/proof/t-patel-result.jpg
+          assets/proof/h-singh-result.jpg
+          assets/proof/r-biju-result.jpg
+     3. Fill in the image field. Paths are relative to /pages,
+        so use "../assets/proof/t-patel-result.jpg".
      ---------------------------------------------------------- */
   var REVIEWS = [
     {
       name: "T. Patel",
       title: "Finally stopped checking manually",
-      body: "Nova helped me stay ready for new openings without refreshing the page all day. The setup was straightforward and the support was helpful."
+      body: "Nova helped me stay ready for new openings without refreshing the page all day. The setup was straightforward and the support was helpful.",
+      /* When ready, set to: "../assets/proof/t-patel-result.jpg" */
+      image: ""
     },
     {
       name: "H. Singh",
       title: "Fast setup and real support",
-      body: "I received my license quickly and was guided through the setup. Nova made the entire process much easier than checking manually."
+      body: "I received my license quickly and was guided through the setup. Nova made the entire process much easier than checking manually.",
+      /* When ready, set to: "../assets/proof/h-singh-result.jpg" */
+      image: ""
     },
     {
       name: "R. Biju",
       title: "Helped me respond much faster",
-      body: "The biggest difference was speed. I no longer had to constantly watch the jobs page and could focus on other things."
+      body: "The biggest difference was speed. I no longer had to constantly watch the jobs page and could focus on other things.",
+      /* When ready, set to: "../assets/proof/r-biju-result.jpg" */
+      image: ""
     },
     {
       name: "S. Kaur",
       title: "Simple to use after setup",
-      body: "I expected the setup to be complicated, but it was explained clearly. Once it was running, Nova quietly handled the monitoring."
+      body: "I expected the setup to be complicated, but it was explained clearly. Once it was running, Nova quietly handled the monitoring.",
+      image: ""
     },
     {
       name: "P. Kaur",
       title: "Worth it for the convenience",
-      body: "Nova saved me a lot of time and stress from repeated refreshing. Everything from payment to receiving the license felt organized."
+      body: "Nova saved me a lot of time and stress from repeated refreshing. Everything from payment to receiving the license felt organized.",
+      image: ""
     },
     {
       name: "D. Singh",
       title: "A much better way to monitor",
-      body: "The continuous monitoring was the main reason I chose Nova. It helped me react to opportunities without being on the website all day."
+      body: "The continuous monitoring was the main reason I chose Nova. It helped me react to opportunities without being on the website all day.",
+      image: ""
     },
     {
       name: "F. Aydin",
       title: "Professional and reliable experience",
-      body: "The purchase, license delivery, and setup process were smooth. I also received direct help whenever I had a question."
+      body: "The purchase, license delivery, and setup process were smooth. I also received direct help whenever I had a question.",
+      image: ""
     },
     {
       name: "A. Shah",
       title: "Made the process less stressful",
-      body: "Instead of worrying about when an opening might appear, I could let Nova monitor while I continued with my day."
+      body: "Instead of worrying about when an opening might appear, I could let Nova monitor while I continued with my day.",
+      image: ""
     }
   ];
-
-  var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* Five bronze stars as inline SVG (no images, no emojis). */
   function starsMarkup() {
@@ -71,23 +97,25 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    var track = document.getElementById("review-track");
-    if (!track) return;
+    var grid = document.getElementById("reviews-grid");
+    if (!grid) return;
 
     /* ----------------------------------------------------------
-       2. RENDER + CAROUSEL
-       Cards render once from REVIEWS. When motion is allowed the
-       set is duplicated so the loop wraps seamlessly; duplicates
-       are hidden from assistive tech.
+       2. RENDER THE REVIEW GRID
+       Each card is an <article>. The written review is a single
+       button that opens the modal. If (and only if) the review
+       has an image path, a separate framed proof button renders
+       beneath it and opens the lightbox.
        ---------------------------------------------------------- */
-    function buildCard(review, index, isClone) {
-      var card = document.createElement("button");
-      card.type = "button";
-      card.className = "review-card";
-      card.setAttribute("data-index", String(index));
-      if (isClone) card.setAttribute("aria-hidden", "true");
-      if (isClone) card.tabIndex = -1;
-      card.innerHTML =
+    function buildCard(review, index) {
+      var card = document.createElement("article");
+      card.className = "review-card reveal";
+      if (index > 0) card.setAttribute("data-delay", String((index % 3) * 70));
+
+      var open = document.createElement("button");
+      open.type = "button";
+      open.className = "review-open";
+      open.innerHTML =
         '<span class="review-stars" aria-label="Rated 5 out of 5 stars">' + starsMarkup() + "</span>" +
         '<span class="review-title">' + review.title + "</span>" +
         '<span class="review-preview">' + review.body + "</span>" +
@@ -96,73 +124,47 @@
         '<span class="verified-pill">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' +
         "Verified Customer</span></span>";
-      card.addEventListener("click", function () {
-        /* Ignore clicks that were really drags/swipes */
-        if (dragDistance > 8) return;
-        openModal(index, card);
+      open.addEventListener("click", function () {
+        openModal(index, open);
       });
+      card.appendChild(open);
+
+      /* Optional shift-proof image — renders only when a real
+         path is supplied in the REVIEWS array above. */
+      if (review.image) {
+        var proof = document.createElement("button");
+        proof.type = "button";
+        proof.className = "review-proof";
+        proof.setAttribute("aria-label", "Enlarge verified shift proof from " + review.name);
+        proof.innerHTML =
+          '<img src="' + review.image + '" alt="Verified shift proof shared by ' + review.name + '" loading="lazy" />' +
+          '<span class="proof-label">Verified shift proof</span>';
+        proof.addEventListener("click", function () {
+          openLightbox(
+            proof.querySelector("img"),
+            "Verified shift proof — " + review.name,
+            proof
+          );
+        });
+        card.appendChild(proof);
+      }
+
       return card;
     }
 
     REVIEWS.forEach(function (review, i) {
-      track.appendChild(buildCard(review, i, false));
+      grid.appendChild(buildCard(review, i));
     });
 
-    if (!prefersReduced) {
-      /* Clone the set once for a seamless wrap-around loop */
-      REVIEWS.forEach(function (review, i) {
-        track.appendChild(buildCard(review, i, true));
+    /* Newly rendered .reveal cards need observing; animations.js
+       has already run by now, so reveal them directly with their
+       stagger delay (global reduced-motion CSS zeroes this out). */
+    grid.querySelectorAll(".reveal").forEach(function (el) {
+      var delay = el.getAttribute("data-delay");
+      if (delay) el.style.transitionDelay = delay + "ms";
+      window.requestAnimationFrame(function () {
+        el.classList.add("visible");
       });
-    }
-
-    /* --- Auto-scroll (skipped entirely for reduced motion) --- */
-    var paused = false;
-    var dragDistance = 0;
-    var pointerStartX = 0;
-    var SPEED = 28; /* pixels per second — slow, readable drift */
-
-    function halfWidth() {
-      return track.scrollWidth / 2;
-    }
-
-    if (!prefersReduced) {
-      var lastTime = null;
-
-      function step(now) {
-        if (lastTime === null) lastTime = now;
-        var dt = (now - lastTime) / 1000;
-        lastTime = now;
-
-        if (!paused && !document.hidden) {
-          track.scrollLeft += SPEED * dt;
-          if (track.scrollLeft >= halfWidth()) {
-            track.scrollLeft -= halfWidth();
-          }
-        }
-        requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-
-      /* Pause while hovered, touched, or focused */
-      track.addEventListener("mouseenter", function () { paused = true; });
-      track.addEventListener("mouseleave", function () { paused = false; });
-      track.addEventListener("touchstart", function () { paused = true; }, { passive: true });
-      track.addEventListener("touchend", function () {
-        window.setTimeout(function () { paused = false; }, 1200);
-      });
-      track.addEventListener("focusin", function () { paused = true; });
-      track.addEventListener("focusout", function () { paused = false; });
-    }
-
-    /* Track pointer movement so a swipe never triggers the modal */
-    track.addEventListener("pointerdown", function (e) {
-      pointerStartX = e.clientX;
-      dragDistance = 0;
-    });
-    track.addEventListener("pointermove", function (e) {
-      if (e.buttons || e.pointerType === "touch") {
-        dragDistance = Math.max(dragDistance, Math.abs(e.clientX - pointerStartX));
-      }
     });
 
     /* ----------------------------------------------------------
@@ -186,7 +188,6 @@
       modalName.textContent = review.name;
       modal.hidden = false;
       document.body.classList.add("modal-open");
-      paused = true;
       modal.querySelector(".modal-close").focus();
     }
 
@@ -194,7 +195,6 @@
       if (!modal || modal.hidden) return;
       modal.hidden = true;
       document.body.classList.remove("modal-open");
-      paused = false;
       if (lastFocused) lastFocused.focus();
     }
 
@@ -203,21 +203,18 @@
     });
 
     /* ----------------------------------------------------------
-       4. RESULTS LIGHTBOX
-       Only result cards that contain a real <img> become
-       clickable. Placeholder cards stay inert until you swap
-       your watermarked images in (see comments in proof.html).
+       4. PROOF LIGHTBOX
        ---------------------------------------------------------- */
     var lightbox = document.getElementById("lightbox");
     var lightboxImg = document.getElementById("lightbox-img");
     var lightboxCaption = document.getElementById("lightbox-caption");
-    var lastResultFocused = null;
+    var lastProofFocused = null;
 
     function openLightbox(img, captionText, trigger) {
-      if (!lightbox) return;
-      lastResultFocused = trigger || document.activeElement;
+      if (!lightbox || !img) return;
+      lastProofFocused = trigger || document.activeElement;
       lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt || "Enlarged result image";
+      lightboxImg.alt = img.alt || "Enlarged proof image";
       lightboxCaption.textContent = captionText || "";
       lightbox.hidden = false;
       document.body.classList.add("modal-open");
@@ -229,29 +226,8 @@
       lightbox.hidden = true;
       lightboxImg.src = "";
       document.body.classList.remove("modal-open");
-      if (lastResultFocused) lastResultFocused.focus();
+      if (lastProofFocused) lastProofFocused.focus();
     }
-
-    document.querySelectorAll(".result-card").forEach(function (card) {
-      var img = card.querySelector("img");
-      if (!img) return; /* placeholder — not clickable yet */
-
-      var caption = card.querySelector(".result-caption");
-      card.classList.add("has-image");
-      card.setAttribute("role", "button");
-      card.tabIndex = 0;
-
-      function activate() {
-        openLightbox(img, caption ? caption.textContent : "", card);
-      }
-      card.addEventListener("click", activate);
-      card.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          activate();
-        }
-      });
-    });
 
     if (lightbox) {
       lightbox.querySelectorAll("[data-close-lightbox]").forEach(function (el) {

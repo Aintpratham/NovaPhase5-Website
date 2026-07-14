@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Reviews &amp; Results — Nova Phase5</title>
-  <meta name="description" content="Reviews and verified results from real Nova Phase5 customers. Sensitive details are always kept private." />
+  <title>See Proof — Nova Phase5</title>
+  <meta name="description" content="Reviews and verified proof from real Nova Phase5 customers. Sensitive details are always kept private." />
   <meta name="theme-color" content="#050505" />
 
   <!-- Favicon / touch icon -->
@@ -20,7 +20,10 @@
 </head>
 <body>
 
-  <!-- ============ NAVIGATION ============ -->
+  <!-- ============ NAVIGATION ============
+       Header intentionally holds only Home + Get Started.
+       The proof page is reached through "See Proof" links in
+       the hero, homepage section, and footers. -->
   <nav class="site-nav">
     <div class="container">
       <a href="../index.html" class="nav-logo"><img src="../assets/icon.png" alt="" aria-hidden="true" />Nova<span class="mark">Phase5</span></a>
@@ -29,7 +32,6 @@
       </button>
       <ul class="nav-links" id="nav-links">
         <li><a href="../index.html">Home</a></li>
-        <li><a href="proof.html" class="active" aria-current="page">Reviews &amp; Results</a></li>
         <!-- TODO (Account Login): enable once customer accounts exist
         <li><a href="login.html">Sign in</a></li>
         -->
@@ -50,12 +52,12 @@
     </header>
 
     <!-- ====================================================
-         CUSTOMER REVIEWS — auto-moving carousel
-         The review content itself lives in ONE place:
-         the REVIEWS array at the top of ../js/proof.js.
-         Edit names, titles, and bodies there — never here.
-         Cards move slowly, pause on hover/touch, stay
-         manually swipeable, and stop for reduced motion.
+         CUSTOMER REVIEWS — responsive grid
+         All review content (including the optional shift-proof
+         image on a card) lives in ONE place: the REVIEWS array
+         at the top of ../js/proof.js. Edit it there — never here.
+         One column on small phones, two when space permits,
+         three on desktop. Tap a card to read the full review.
          ==================================================== -->
     <section class="proof-block reviews-block">
       <div class="container">
@@ -63,19 +65,15 @@
           <h2>What customers say</h2>
           <p class="block-note">Tap a review to read the full experience.</p>
         </div>
-      </div>
 
-      <div class="review-marquee reveal" id="review-marquee">
-        <div class="review-track" id="review-track" tabindex="0" role="region" aria-label="Customer reviews, scrollable">
+        <div class="reviews-grid" id="reviews-grid">
           <!-- Review cards are rendered here by proof.js from the REVIEWS array -->
         </div>
-      </div>
 
-      <noscript>
-        <div class="container">
+        <noscript>
           <p class="block-note">Enable JavaScript to view customer reviews.</p>
-        </div>
-      </noscript>
+        </noscript>
+      </div>
     </section>
 
     <!-- Review modal — filled in and controlled by proof.js.
@@ -100,100 +98,11 @@
       </div>
     </div>
 
-    <!-- ====================================================
-         VERIFIED RESULTS — real proof images go here
-         HOW TO ADD YOUR IMAGES (4-8 total):
-         1. Place your already-watermarked files (with the large
-            diagonal "AWareNova.net" watermark baked in) into:
-              assets/proof/
-            Recommended filenames are printed on each card:
-              result-01.jpg ... result-06.jpg
-         2. For each card below, delete the .result-placeholder
-            div and uncomment the <img> line, updating src/alt.
-         3. The card automatically becomes tap-to-enlarge in the
-            lightbox once it contains an <img>.
-         Do NOT put unwatermarked or unredacted files here.
-         ==================================================== -->
-    <section class="proof-block results-block">
-      <div class="container">
-        <div class="block-head reveal">
-          <h2>Verified results</h2>
-          <p class="block-note">Screenshots from real customer outcomes. Tap any image to enlarge.</p>
-          <p class="privacy-note">Names, job IDs, and sensitive details may be obscured to protect our customers.</p>
-        </div>
-
-        <div class="results-grid">
-          <!-- RESULT SLOT 1 — replace placeholder with:
-               <img src="../assets/proof/result-01.jpg" alt="Verified customer result 1" loading="lazy" /> -->
-          <figure class="result-card reveal">
-            <div class="result-placeholder">
-              <span class="ph-label">Result image</span>
-              <span class="ph-file">assets/proof/result-01.jpg</span>
-            </div>
-            <figcaption class="result-caption">Verified result — 01</figcaption>
-          </figure>
-
-          <!-- RESULT SLOT 2 — replace placeholder with:
-               <img src="../assets/proof/result-02.jpg" alt="Verified customer result 2" loading="lazy" /> -->
-          <figure class="result-card reveal" data-delay="60">
-            <div class="result-placeholder">
-              <span class="ph-label">Result image</span>
-              <span class="ph-file">assets/proof/result-02.jpg</span>
-            </div>
-            <figcaption class="result-caption">Verified result — 02</figcaption>
-          </figure>
-
-          <!-- RESULT SLOT 3 — replace placeholder with:
-               <img src="../assets/proof/result-03.jpg" alt="Verified customer result 3" loading="lazy" /> -->
-          <figure class="result-card reveal" data-delay="120">
-            <div class="result-placeholder">
-              <span class="ph-label">Result image</span>
-              <span class="ph-file">assets/proof/result-03.jpg</span>
-            </div>
-            <figcaption class="result-caption">Verified result — 03</figcaption>
-          </figure>
-
-          <!-- RESULT SLOT 4 — replace placeholder with:
-               <img src="../assets/proof/result-04.jpg" alt="Verified customer result 4" loading="lazy" /> -->
-          <figure class="result-card reveal" data-delay="180">
-            <div class="result-placeholder">
-              <span class="ph-label">Result image</span>
-              <span class="ph-file">assets/proof/result-04.jpg</span>
-            </div>
-            <figcaption class="result-caption">Verified result — 04</figcaption>
-          </figure>
-
-          <!-- RESULT SLOT 5 — optional. Delete this figure if unused,
-               or replace placeholder with:
-               <img src="../assets/proof/result-05.jpg" alt="Verified customer result 5" loading="lazy" /> -->
-          <figure class="result-card reveal" data-delay="240">
-            <div class="result-placeholder">
-              <span class="ph-label">Result image</span>
-              <span class="ph-file">assets/proof/result-05.jpg</span>
-            </div>
-            <figcaption class="result-caption">Verified result — 05</figcaption>
-          </figure>
-
-          <!-- RESULT SLOT 6 — optional. Delete this figure if unused,
-               or replace placeholder with:
-               <img src="../assets/proof/result-06.jpg" alt="Verified customer result 6" loading="lazy" /> -->
-          <figure class="result-card reveal" data-delay="300">
-            <div class="result-placeholder">
-              <span class="ph-label">Result image</span>
-              <span class="ph-file">assets/proof/result-06.jpg</span>
-            </div>
-            <figcaption class="result-caption">Verified result — 06</figcaption>
-          </figure>
-
-          <!-- To show 7 or 8 results, copy a figure block above and
-               use result-07.jpg / result-08.jpg. -->
-        </div>
-      </div>
-    </section>
-
     <!-- Lightbox — filled in and controlled by proof.js.
-         Only cards that contain a real <img> open it. -->
-    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged result image" hidden>
+         Opens when a shift-proof image inside a review card is
+         tapped. Nothing renders on the page until a real image
+         path is supplied in the REVIEWS array (see js/proof.js). -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged proof image" hidden>
       <div class="modal-backdrop" data-close-lightbox></div>
       <figure class="lightbox-panel">
         <button class="modal-close" type="button" aria-label="Close image" data-close-lightbox>
@@ -237,9 +146,8 @@
             <h4>Product</h4>
             <ul>
               <li><a href="../index.html">Home</a></li>
-              <li><a href="proof.html">Reviews &amp; Results</a></li>
+              <li><a href="proof.html">See Proof</a></li>
               <li><a href="pricing.html">Get Started</a></li>
-              <li><a href="setup.html">Setup</a></li>
             </ul>
           </div>
           <div class="footer-col">
