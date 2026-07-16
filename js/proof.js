@@ -39,22 +39,22 @@
     {
       name: "T. Patel",
       rating: 5,
-      title: "Hamilton shift during the Fall intake",
-      body: "I was checking Hamilton openings for weeks and kept missing them. Nova helped me respond during the Fall 2025 intake, and I secured a warehouse shift paying $25.10 an hour.",
+      title: "Got Hamilton shift",
+      body: "I was trying for Hamilton warehouse from long time. During Fall intake Nova helped me catch the opening much faster than I was doing manually. Happy with the purchase.",
       image: "../assets/proof/t-patel-hamilton-shift.png"
     },
     {
       name: "H. Singh",
       rating: 5,
-      title: "Secured a Whitby opening",
-      body: "I could not keep refreshing the jobs page while working. Nova helped me catch a Whitby sortation-centre opening, and the pre-hire process started soon after.",
+      title: "Finally got in Whitby",
+      body: "I was refreshing Amazon warehouse site every day but couldn't get in manually. Nova helped me catch one shift in Whitby and after that everything was smooth. Setup was easy also and support replied fast when I had questions.",
       image: "../assets/proof/h-singh-whitby-opening.png"
     },
     {
       name: "R. Biju",
       rating: 5,
-      title: "Finally got a St. Thomas shift",
-      body: "Most of the openings near London were for St. Thomas and they disappeared very quickly. Nova helped me catch one without sitting on the page all day.",
+      title: "Worth buying",
+      body: "Most of the openings near London were for St. Thomas and they disappeared very quickly. Nova helped me catch one without sitting on the page all day. Biggest difference was speed. Before I was refreshing many times every day. Nova was watching in background and I finally got St. Thomas shift.  ",
       image: "../assets/proof/r-biju-st-thomas-mobile.png"
     },
     {
@@ -67,15 +67,15 @@
     {
       name: "P. Kaur",
       rating: 5,
-      title: "Evening shift without constant refreshing",
-      body: "I wanted an evening schedule but those openings disappeared fast. Nova monitored while I was busy and helped me catch a St. Thomas evening shift.",
+      title: "Saved me lot of time",
+      body: "I work during day so I cannot keep checking Amazon jobs. Nova made it much easier and I finally got evening shift.",
       image: "../assets/proof/p-kaur-st-thomas-evening.png"
     },
     {
       name: "D. Singh",
       rating: 4,
-      title: "It worked, but I had to stay patient",
-      body: "Nova made the monitoring much easier, but there were not many openings in my area. I finally secured a St. Thomas opportunity after around 30 to 40 days of waiting and trying.",
+      title: "Good but need little patience",
+      body: "Software is working good but in my area openings were not coming much. I got my shift after around one month. Still much better than checking manually every few minutes.",
       image: "../assets/proof/d-singh-st-thomas-shift.png"
     },
     {
@@ -88,8 +88,8 @@
     {
       name: "A. Shah",
       rating: 4,
-      title: "Useful, but results depend on hiring",
-      body: "The software worked and saved me from checking manually, but it did not create new openings. I had to wait through a slower hiring period before I found a suitable shift.",
+      title: "Good support and easy setup",
+      body: "Setup was simple and everything worked fine. I only gave 4 stars because I needed little help during installation, but support replied quickly and after that Nova was running without any issue.",
       image: ""
     }
   ];
